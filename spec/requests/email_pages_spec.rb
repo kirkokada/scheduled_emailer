@@ -95,6 +95,22 @@ RSpec.describe "Email Pages", type: :feature do
         expect(page).to have_selector "ul#email_list li:nth-child(2)", text: second.subject
         expect(page).to have_selector "ul#email_list li:nth-child(3)", text: third.subject
       end
+
+      context "after an email is scheduled to be delivered" do
+        
+        before do 
+          ActionMailer::Base.deliveries.clear
+          first.update_column(:deliver_at, 1.day.ago)
+          Email.send_scheduled_emails
+          visit root_path
+        end
+
+        it "should have sent the email" do
+          expect(ActionMailer::Base.deliveries.size).to eq 1
+        end
+
+        it { should_not have_content first.subject }
+      end
     end
   end
 end

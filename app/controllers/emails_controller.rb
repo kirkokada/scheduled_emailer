@@ -1,6 +1,6 @@
 class EmailsController < ApplicationController
   def index
-    @emails = Email.all.order('deliver_at asc')
+    @emails = Email.unsent.order('deliver_at asc')
   end
 
   def new
