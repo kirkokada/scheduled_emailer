@@ -1,2 +1,19 @@
-<h1>Emails#new</h1>
-<p>Find me in app/views/emails/new.html.erb</p>
+<h1>New Email</h1>
+<%= form_for @email do |f| %>
+  <%= render 'error_messages' %>
+  <%= f.label :to %><br />
+  <%= f.text_field :to %><br />
+
+  <%= f.label :subject, "Subject" %><br/>
+  <%= f.text_field :subject %><br/>
+
+  <%= f.label :body, "Body" %><br/>
+  <%= f.text_area :body %><br/>
+
+  <%= f.label :deliver_at, "Deliver At" %><br/>
+  <%= f.date_select :deliver_at %>
+  <%= f.time_select :deliver_at, ignore_date: true %><br/>
+
+  <%= f.submit "Schedule Email" %>
+
+<% end %>

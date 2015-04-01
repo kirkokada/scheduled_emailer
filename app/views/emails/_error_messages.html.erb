@@ -1,0 +1,12 @@
+<% if @email.errors.any? %>
+  <div id="error_messages">
+    <h2>
+      This form has <%= pluralize(@email.errors.full_messages.count, 'error') %>:
+    </h2>
+    <ul>
+      <% @email.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
