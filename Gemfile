@@ -36,12 +36,12 @@ group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'spring'
-end
-
-group :test do
   gem 'rspec-rails'
   gem 'guard-rspec'
   gem 'rb-fsevent'
+end
+
+group :test do
   gem 'factory_girl_rails'
   gem 'terminal-notifier'
   gem 'terminal-notifier-guard'
