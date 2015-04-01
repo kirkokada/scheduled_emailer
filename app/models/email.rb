@@ -4,17 +4,15 @@ class Email < ActiveRecord::Base
   validate :email_is_valid
   validates :to, presence: true
 
+  scope :unsent, -> { where(sent: false) }
+  scope :deliverable, -> { where("deliver_at < :now", now: DateTime.now) }
+
   def self.send_scheduled_emails
-    current_time = DateTime.now
-    scheduled_emails = Email.unsent.where("deliver_at < :now", now: current_time)
+    scheduled_emails = Email.unsent.deliverable
     scheduled_emails.each do |mail|
       Emailer.regular(mail).deliver_now
       mail.update_column(:sent, true)
     end
-  end
-
-  def self.unsent
-    where("sent = false")
   end
 
   private
